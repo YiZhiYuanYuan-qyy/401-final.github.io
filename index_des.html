@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Pokemon Type Weakness</title>
+
+  <style>
+    body {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      grid-gap: 20px;
+    }
+
+    fieldset {
+      width: max-content;
+    }
+
+    span {
+      font-style: italic;
+    }
+  </style>
+
+  <script src="types_des.js" defer></script>
+</head>
+
+<body>
+  <form id="pokeForm" onsubmit="return false;">
+    <fieldset>
+      <legend>My Pokemon Is...</legend>
+      <select name="type1" id="type1">
+        <option value="pokeDefault"></option>
+        <option value="normal">normal</option>
+        <option value="fire">fire</option>
+        <option value="fighting">fighting</option>
+        <option value="water">water</option>
+        <option value="flying">flying</option>
+        <option value="grass">grass</option>
+        <option value="poison">poison</option>
+        <option value="electric">electric</option>
+        <option value="ground">ground</option>
+        <option value="psychic">psychic</option>
+        <option value="rock">rock</option>
+        <option value="ice">ice</option>
+        <option value="bug">bug</option>
+        <option value="dragon">dragon</option>
+        <option value="ghost">ghost</option>
+        <option value="dark">dark</option>
+        <option value="steel">steel</option>
+        <option value="fairy">fairy</option>
+      </select>
+      and
+      <select name="type2" id="type2">
+        <option value="pokeDefault"></option>
+        <option value="normal">normal</option>
+        <option value="fire">fire</option>
+        <option value="fighting">fighting</option>
+        <option value="water">water</option>
+        <option value="flying">flying</option>
+        <option value="grass">grass</option>
+        <option value="poison">poison</option>
+        <option value="electric">electric</option>
+        <option value="ground">ground</option>
+        <option value="psychic">psychic</option>
+        <option value="rock">rock</option>
+        <option value="ice">ice</option>
+        <option value="bug">bug</option>
+        <option value="dragon">dragon</option>
+        <option value="ghost">ghost</option>
+        <option value="dark">dark</option>
+        <option value="steel">steel</option>
+        <option value="fairy">fairy</option>
+      </select>
+      type.
+    </fieldset>
+  </form>
+
+  <div id="pokeInfo">
+
+  </div>
+</body>
+
+</html>

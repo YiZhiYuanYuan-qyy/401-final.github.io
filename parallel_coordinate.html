@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+  <meta content="utf-8" http-equiv="encoding" />
+</head>
+
+<title>Parallel coordinate</title>
+
+<link rel="stylesheet" type="text/css" href="css/parasol.css" />
+
+<!-- <script src="./lib/d3.v5.min.js"></script> -->
+<script src="./dist/parasol.standalone.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<body>
+  <h1>Parallel coordinate</h1>
+  <!-- <p>Prototype for connected chart and grid activity.</p> -->
+  <p>
+    <button id="reset_brushes">Reset Brushes</button>
+    <!-- <button id="grid_update">Grid Update</button> -->
+    <button id="export_brushed">Scatter Plot</button>
+  </p>
+
+  <h3>Pokemons ID: 1 to 800
+  </h3>
+
+  <svg height="20" width="400">
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color: rgb(67, 146, 146); stop-opacity: 1" />
+        <stop offset="50%" style="stop-color: rgb(240, 234, 203); stop-opacity: 1" />
+        <stop offset="100%" style="stop-color: rgb(194, 99, 128); stop-opacity: 1" />
+      </linearGradient>
+    </defs>
+    <rect height="20" width="400" fill="url(#grad1)" />
+  </svg>
+
+  <!-- <div id="p0" class="parcoords" style="height: 400px; width: 800px"></div> -->
+  <div id="p1" class="parcoords" style="height: 500px; width: 600px; position:relative ;left:0px;top:0px">
+    <div id="grid" style="width: 200px; height: 180px; position:absolute ;left:700px;top:0px" class="slickgrid-container"></div>
+    <div id="myDiv" style="width: 400px; height: 300px;position:absolute;left:600px;top:190px">
+
+      <form>
+        <select id="para_region1" name="para1" onchange="change1()" style="position:absolute;left:10px;top:270px">
+          <option value=1>HP</option>
+          <option value=2>Attack</option>
+          <option value=3>Defense</option>
+          <option value=4>Sp. Atk</option>
+          <option value=5>Sp. Def</option>
+          <option value=6>Speed</option>
+          <option value=7>Preference</option>
+        </select>
+        <select id="para_region2" name="para2" onchange="change2()" style="position:absolute;left:10px;top:240px">
+          <option value=1>HP</option>
+          <option value=2>Attack</option>
+          <option value=3>Defense</option>
+          <option value=4>Sp. Atk</option>
+          <option value=5>Sp. Def</option>
+          <option value=6>Speed</option>
+          <option value=7>Preference</option>
+        </select>
+
+
+      </form>
+    </div>
+
+    <div id="myDiv1" style="width: 400px; height: 300px;position:absolute;left:970px;top:190px">
+
+      <form>
+        <select id="para_region3" name="para1" onchange="change3()" style="position:absolute;left:50px;top:270px">
+          <option value=1>HP</option>
+          <option value=2>Attack</option>
+          <option value=3>Defense</option>
+          <option value=4>Sp. Atk</option>
+          <option value=5>Sp. Def</option>
+          <option value=6>Speed</option>
+          <option value=7>Preference</option>
+        </select>
+        <select id="para_region4" name="para2" onchange="change4()" style="position:absolute;left:50px;top:240px">
+          <option value=1>HP</option>
+          <option value=2>Attack</option>
+          <option value=3>Defense</option>
+          <option value=4>Sp. Atk</option>
+          <option value=5>Sp. Def</option>
+          <option value=6>Speed</option>
+          <option value=7>Preference</option>
+        </select>
+
+
+      </form>
+
+    </div>
+  </div>
+  <!-- <div id="pok"></div> -->
+
+
+  <!-- <div id="myPlot1" style="width:100%;max-width:700px"> </div>
+    <div id="myPlot2" style="width:100%;max-width:700px">
+    </div> -->
+
+
+
+</body>
+
+<script>
+  $("#para_region1").each(function() {
+    $(this).find("option").eq(0).prop("selected", true)
+  });
+  $("#para_region2").each(function() {
+    $(this).find("option").eq(5).prop("selected", true)
+  });
+  $("#para_region3").each(function() {
+    $(this).find("option").eq(1).prop("selected", true)
+  });
+  $("#para_region4").each(function() {
+    $(this).find("option").eq(2).prop("selected", true)
+  });
+
+  function change1() {
+    // 获取参数
+    var vs = $("#para_region1").val();
+    // $("#target").val($("#target option:first").val());
+    // 触发对应的函数
+    if (vs == 1) {
+      c1 = 'HP';
+    }
+    if (vs == 2) {
+      c1 = 'Attack';
+    }
+    if (vs == 3) {
+      c1 = 'Defense';
+    }
+    if (vs == 4) {
+      c1 = 'Sp. Atk';
+    }
+    if (vs == 5) {
+      c1 = 'Sp. Def';
+    }
+    if (vs == 6) {
+      c1 = 'Speed';
+    }
+    if (vs == 7) {
+      c1 = 'Preference';
+    }
+    console.log(c1);
+    return c1
+    draw_pok1(data, "Attack", "Defense")
+  };
+
+  function change2() {
+    // 获取参数
+    var vs = $("#para_region2").val();
+    // 触发对应的函数
+    if (vs == 1) {
+      c2 = 'HP';
+    }
+    if (vs == 2) {
+      c2 = 'Attack';
+    }
+    if (vs == 3) {
+      c2 = 'Defense';
+    }
+    if (vs == 4) {
+      c2 = 'Sp. Atk';
+    }
+    if (vs == 5) {
+      c2 = 'Sp. Def';
+    }
+    if (vs == 6) {
+      c2 = 'Speed';
+    }
+    if (vs == 7) {
+      c2 = 'Preference';
+    }
+    console.log(c2);
+    return c2
+  };
+
+  function change3() {
+    // 获取参数
+    var vs = $("#para_region3").val();
+    // 触发对应的函数
+    if (vs == 1) {
+      c3 = 'HP';
+    }
+    if (vs == 2) {
+      c3 = 'Attack';
+    }
+    if (vs == 3) {
+      c3 = 'Defense';
+    }
+    if (vs == 4) {
+      c3 = 'Sp. Atk';
+    }
+    if (vs == 5) {
+      c3 = 'Sp. Def';
+    }
+    if (vs == 6) {
+      c3 = 'Speed';
+    }
+    if (vs == 7) {
+      c3 = 'Preference';
+    }
+    console.log(c3);
+    return c3
+  };
+
+  function change4() {
+    // 获取参数
+    var vs = $("#para_region4").val();
+    // 触发对应的函数
+    if (vs == 1) {
+      c4 = 'HP';
+    }
+    if (vs == 2) {
+      c4 = 'Attack';
+    }
+    if (vs == 3) {
+      c4 = 'Defense';
+    }
+    if (vs == 4) {
+      c4 = 'Sp. Atk';
+    }
+    if (vs == 5) {
+      c4 = 'Sp. Def';
+    }
+    if (vs == 6) {
+      c4 = 'Speed';
+    }
+    if (vs == 7) {
+      c4 = 'Preference';
+    }
+    console.log(c4);
+    return c4
+  };
+
+
+  var green_gradient = d3
+    .scaleLinear()
+    .domain([0, 400, 800]) // range of fuel economy data
+    .range([d3.rgb(67, 146, 146), d3.rgb(240, 234, 203), d3.rgb(194, 99, 128)]) //
+    .interpolate(d3.interpolateLab);
+
+  d3.csv("data/Pokemon_preference.csv").then(function(data) {
+
+    // initialize chart closures
+    var ps = Parasol(data)(".parcoords")
+      .attachGrid({
+        container: "#grid"
+      })
+      .alpha(0.3)
+      .linked()
+      .reorderable() // dynamically reorderable axes
+      // update charts
+      .color(function(data) {
+        return green_gradient(data["Species"]);
+      }) // quantitative color scale
+      .render();
+
+    // ps.hideAxes(["Species"]).reorderable().render();
+
+    d3.select("#reset_brushes").on("click", function() {
+      ps.brushReset();
+      ps.unmark();
+      Remove();
+    });
+    d3.select("#export_brushed").on("click", function() {
+      //ps.exportData("marked");
+      //console.log(ps.exportData("brushed"));
+      // ps.exportData("brushed"); // will export as 'parasol_data.csv' as default
+
+      const text = ps.exportData("marked")
+      // const file = new File([blob], { type: "text/csv" })
+      // debugger;
+      const data = {}
+      const lines = text.split("\n")
+      const fields = lines.shift().split(',')
+      for (const field of fields) {
+        data[field] = []
+      }
+      for (const line of lines) {
+        const values = line.split(',')
+        for (let i = 0; i < values.length; i++) {
+          data[fields[i]].push(values[i])
+        }
+      }
+      // window.data = data
+      // draw_pok1(data, "HP", "Attack")
+      if (typeof c1 == "undefined") {
+        draw_pok(data, "HP", "Speed");
+      } else if (typeof c2 == "undefined") {
+        draw_pok(data, "HP", "Speed");
+      } else {
+        console.log(typeof c1);
+        console.log(typeof c2);
+        draw_pok(data, c1, c2);
+      }
+
+      if (typeof c3 == "undefined") {
+        draw_pok1(data, "Attack", "Defense");
+      } else if (typeof c4 == "undefined") {
+        draw_pok1(data, "Attack", "Defense");
+      } else {
+        console.log(typeof c3);
+        console.log(typeof c4);
+        draw_pok1(data, c3, c4);
+      }
+
+
+
+    });
+
+  });
+
+
+
+  function draw_pok(data, cx, cy) {
+    colors = [];
+    for (var i = 0; i < data['HP'].length; i++) {
+      colors.push('#9370DB');
+    };
+
+    console.log(colors);
+    var myPlot = document.getElementById('myDiv'),
+
+      x = data[cx],
+
+      y = data[cy],
+
+      colors = colors,
+      data = [{
+        x: x,
+        y: y,
+        type: 'scatter',
+        mode: 'markers',
+        marker: {
+          size: 6,
+          color: colors
+        }
+      }],
+      layout = {
+        xaxis: {
+          range: [Math.min(x) - 10, Math.max(x) + 10],
+          title: cx,
+          color: 'rgb(255,255,255)',
+        },
+        yaxis: {
+          range: [Math.min(y) - 10, Math.max(y) + 10],
+          title: cy,
+          color: 'rgb(255,255,255)',
+        },
+        // title: 'Inventory',
+        hovermode: 'closest',
+        title: {
+          text: cx + ' vs ' + cy,
+          font: {
+            color: 'rgb(255,255,255)',
+          },
+        },
+        plot_bgcolor: "#222",
+        paper_bgcolor: "#222",
+      };
+    Plotly.newPlot('myDiv', data, layout);
+
+    myPlot.on('plotly_hover', function(data) {
+      var pn = '',
+        tn = '',
+        colors = [];
+      for (var i = 0; i < data.points.length; i++) {
+        pn = data.points[i].pointNumber;
+        tn = data.points[i].curveNumber;
+        colors = data.points[i].data.marker.color;
+      };
+      colors[pn] = '#C54C82';
+
+      var update = {
+        'marker': {
+          color: colors,
+          size: 6
+        }
+      };
+      Plotly.restyle('myDiv', update, [tn]);
+    });
+
+    myPlot.on('plotly_unhover', function(data) {
+      var pn = '',
+        tn = '',
+        colors = [];
+      for (var i = 0; i < data.points.length; i++) {
+        pn = data.points[i].pointNumber;
+        tn = data.points[i].curveNumber;
+        colors = data.points[i].data.marker.color;
+      };
+      colors[pn] = '#9370DB';
+
+      var update = {
+        'marker': {
+          color: colors,
+          size: 6
+        }
+      };
+      Plotly.restyle('myDiv', update, [tn]);
+    });
+
+  }
+
+  function draw_pok1(data, cx, cy) {
+    colors = [];
+    for (var i = 0; i < data['HP'].length; i++) {
+      colors.push('#9370DB');
+    };
+
+    console.log(colors);
+    var myPlot1 = document.getElementById('myDiv1'),
+      x = data[cx],
+
+      y = data[cy],
+
+      colors = colors,
+      data = [{
+        x: x,
+        y: y,
+        type: 'scatter',
+        mode: 'markers',
+        marker: {
+          size: 6,
+          color: colors
+        }
+      }],
+      layout = {
+        xaxis: {
+          range: [Math.min(x) - 10, Math.max(x) + 10],
+          title: cx,
+          color: "rgb(255,255,255)",
+        },
+        yaxis: {
+          range: [Math.min(y) - 10, Math.max(y) + 10],
+          title: cy,
+          color: "rgb(255,255,255)",
+        },
+        // title: 'Inventory',
+        hovermode: 'closest',
+
+
+        title: {
+          text: cx + ' vs ' + cy,
+          font: {
+            color: 'rgb(255,255,255)'
+          },
+        },
+        // title_textcolor: "white",
+        plot_bgcolor: "#222",
+        paper_bgcolor: "#222"
+      };
+
+    Plotly.newPlot('myDiv1', data, layout);
+
+    myPlot1.on('plotly_hover', function(data) {
+      var pn = '',
+        tn = '',
+        colors = [];
+      for (var i = 0; i < data.points.length; i++) {
+        pn = data.points[i].pointNumber;
+        tn = data.points[i].curveNumber;
+        colors = data.points[i].data.marker.color;
+      };
+      colors[pn] = '#C54C82';
+
+      var update = {
+        'marker': {
+          color: colors,
+          size: 6
+        }
+      };
+      Plotly.restyle('myDiv1', update, [tn]);
+    });
+
+    myPlot1.on('plotly_unhover', function(data) {
+      var pn = '',
+        tn = '',
+        colors = [];
+      for (var i = 0; i < data.points.length; i++) {
+        pn = data.points[i].pointNumber;
+        tn = data.points[i].curveNumber;
+        colors = data.points[i].data.marker.color;
+      };
+      colors[pn] = '#9370DB';
+
+      var update = {
+        'marker': {
+          color: colors,
+          size: 6
+        }
+      };
+      Plotly.restyle('myDiv1', update, [tn]);
+    });
+
+  }
+</script>

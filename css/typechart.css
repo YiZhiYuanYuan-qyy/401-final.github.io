@@ -1,0 +1,190 @@
+@import url(http://fonts.googleapis.com/css?family=Averia+Sans+Libre|Open+Sans);
+body{
+    background: #222;
+    font-familye: 'Open Sans';
+}
+
+.node {
+    font: 300 16px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    fill: #bbb;
+    opacity: 0.6;
+}
+
+.node:hover,
+.node--active {
+    fill: rgba(255, 255, 255, 1);
+}
+
+.immune,
+.weak,
+.strong {
+    stroke: #666;
+    stroke-opacity: 0.1;
+    fill: none;
+    pointer-events: none;
+    z-index: -100;
+    stroke-width: 1px;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation-name: dash;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+.node:hover,
+.node--source,
+.node--target,
+.node--active {
+    font-weight: 700;
+    opacity: 1;
+}
+
+.does-not-affect,
+.not-very-effective-against,
+.super-effective-against,
+.is-weak-against,
+.resists-against,
+.is-immune {
+    stroke-width: 4px;
+    stroke-opacity: 1;
+    z-index: 99999;
+}
+
+.legend {
+    display: inline-block;
+    width: 30px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 2px;
+}
+
+.does-not-affect {
+    stroke: #FFC1C1 ;
+    border-color: #FFC1C1 ;
+}
+
+.not-very-effective-against {
+    stroke: rgba(0, 193, 248, 1);
+    border-color: rgba(0, 193, 248, 1);
+}
+
+.super-effective-against {
+    stroke: #EE799F;
+    border-color: #EE799F;
+}
+
+.is-weak-against,
+.resists-against,
+.is-immune,
+.double-strengths-node,
+.double-weaknesses-node,
+.legend-dash {
+    border-style: solid;
+    border-radius: 10px;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: -500;
+    animation-name: dash;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.resists-against {
+    stroke: #9F79EE;
+    border-color: #9F79EE;
+}
+
+.is-weak-against {
+    stroke: #EE799F;
+    border-color: #EE799F;
+}
+
+.is-immune {
+    stroke: #FFC1C1 ;
+    border-color: #FFC1C1 ;
+}
+
+#typechart {
+    margin: auto;
+    text-align: center;
+    width: 1100px;
+}
+
+#details {
+    width: 350px;
+    float: left;
+    color: #f7f7f7;
+    font-family: 'Open Sans';
+    text-align: left;
+}
+#details1 {
+    width: 500px;
+    color: #f7f7f7;
+    font-family: 'Open Sans';
+    text-align: center;
+}
+
+#details h1,
+#details h2 {
+    text-align: left;
+    font-family: 'Open Sans';
+    color: #cecece;
+}
+
+a,
+a:visited,
+a:active {
+    color: #FFFACD;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#graph {
+    width: 750px;
+    float: left;
+}
+
+#is-also-effective-against {
+    display: none;
+}
+
+.immune-node {
+    fill: #FFC1C1  !important;
+}
+.weaknesses-node {
+    fill: #9F79EE;
+}
+.double-weaknesses-node {
+    fill: #436EEE;
+    border-color: #436EEE;
+}
+.double-resists {
+    stroke: #436EEE;
+    border-color: #cd0a0a;
+}
+.strengths-node {
+    fill: #EE799F;
+}
+.double-strengths-node {
+    fill: #cd0a0a;
+    border-color: #cd0a0a;
+}
+.double-damage {
+    stroke: #cd0a0a;
+    border-color: #cd0a0a;
+}
+.newLine {
+    position: relative;
+    left: 15%;
+}
+
+.drawLine {
+    position: relative;
+    width: 500px;
+    height: 500px;
+}
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
